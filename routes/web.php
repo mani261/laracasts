@@ -37,22 +37,4 @@ Route::get('posts/{post}', function($slug){
     ]);
 })->whereNumber('post');
 
-/* Route::get('/posts', function () {
-    return view('index');
-});
-
-Route::get('/post', function () {
-    return view('post');
-}); */
-
-Route::get('/login', function(){
-    return view('form');
-});
-
-Route::post('submit', function(Request $request){
-    // dd($_POST);
-    echo $request['email'];
-    // dd($request->all());
-});
-
 // Route::get('/home', 'IndexController@home');
