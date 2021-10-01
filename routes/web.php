@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Post;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,26 +16,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    return view('posts', [
+        'posts' => Post::all()
+    ]);
 });
 
 
-Route::get('posts/{post}', function($slug){
-    $path = __DIR__ . "/../resources/posts/{$slug}.html";
+Route::get('posts/{post}', function ($slug) {
 
-    if (! file_exists($path)) {
-        abort(404);
-    }
-
-    $post = cache()->remember("posts.{$slug}", now()->addDays(1), function () use ($path)
-    {
-        // var_dump("file get contents");
-        return file_get_contents($path);
-    });
-
-    return view('post', [
-        'title' => $post
-    ]);
+    $post = Post::find($slug);
+    return view(
+        'post',
+        [
+            'post' => $post
+        ]
+    );
 })->whereNumber('post');
 
 // Route::get('/home', 'IndexController@home');
